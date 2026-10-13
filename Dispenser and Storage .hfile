@@ -1,0 +1,30 @@
+//Dispenser//
+#pragma once
+#include "SnackStorage.h"
+#include "RetrievalBin.h"
+
+class SnackDispenser
+{
+private:
+    SnackStorage storage;
+    RetrievalBin bin;
+
+public:
+    void selectSnack(int row, int slot);
+    bool dispenseSnack(int row, int slot);
+    void refillSlot(int row, int slot, const Snack& snack);
+};
+
+//Storage//
+#pragma once
+#include "SlotRow.h"
+
+class SnackStorage
+{
+private:
+    SlotRow slotRows[2];
+
+public:
+    SlotRow& getSlotRow(int index);
+    PackageSlot& getPackageSlot(int row, int slot);
+};
