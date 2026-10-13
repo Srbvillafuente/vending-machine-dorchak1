@@ -6,7 +6,7 @@ using namespace std;
 
 // --------------------  COIL  --------------------
 
-class Coil
+class PackageSlot
 {
 private:
     int capacity;
@@ -17,7 +17,7 @@ private:
 
 public:
 
-    Coil()
+    PackageSlot()
     {
         capacity = 5;
         coil = 0;
@@ -79,11 +79,11 @@ class SetOfCoils
 private:
 
     // 3 rows and 5 columns
-    Coil slots[3][5];
+    PackageSlot slots[3][5];
 
 public:
 
-    Coil& getSlot(int row, int column)
+    PackageSlot& getSlot(int row, int column)
     {
         return slots[row][column];
     }
@@ -100,7 +100,7 @@ private:
 
 public:
 
-    Coil& getCoil(int row, int column)
+    PackageSlot& getCoil(int row, int column)
     {
         return setOfSlots.getSlot(row, column);
     }
@@ -163,7 +163,7 @@ public:
 
     void dispenseSnack(int row, int column)
     {
-        Coil& coil =
+        PackageSlot& coil =
             snackStorage.getCoil(row, column);
 
         if (coil.isEmpty())
@@ -206,7 +206,7 @@ public:
 
     void checkCoil(int row, int column)
     {
-        Coil& coil =
+        PackageSlot& coil =
             snackStorage.getCoil(row, column);
 
         cout << "Coil ID: "
