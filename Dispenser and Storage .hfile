@@ -17,7 +17,7 @@ public:
 
 //Storage//
 #pragma once
-#include "SlotRow.h"
+#include "slotRow.h"
 
 class SnackStorage
 {
