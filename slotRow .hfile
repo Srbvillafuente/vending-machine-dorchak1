@@ -1,0 +1,9 @@
+#pragma once
+#include "PackageSlot.h"
+
+class SlotRow {
+private:
+    PackageSlot packageSlots[5];
+public:
+    PackageSlot& getPackageSlot(int index);
+};
