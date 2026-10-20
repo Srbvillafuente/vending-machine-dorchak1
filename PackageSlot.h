@@ -1,25 +1,18 @@
-//
-// Created by Sebastian Baltazar on 10/13/26.
-//
-
-#ifndef UNTITLED_PACKAGESLOT_H
-#define UNTITLED_PACKAGESLOT_H
+#pragma once
+#include <string>
 
 class PackageSlot {
 private:
-    Snack snack;
-    const int capacity;
-    int countDispensed;
+    std::string snack;
+    const int capacity = 5;
+    int quantity = 0;
+    int countDispensed = 0;
 
 public:
-    PackageSlot(Snack newSnack, int slotCapacity);
+    PackageSlot();
 
-    bool dispense();
-    void refill(Snack newSnack);
-    const Snack& getSnack() const;
-    int getDispensedCount() const;
+    std::string drop();
+    bool refill(const std::string& newSnack);
     bool isEmpty() const;
+    int getDispensedCount() const;
 };
-
-
-#endif //UNTITLED_PACKAGESLOT_H

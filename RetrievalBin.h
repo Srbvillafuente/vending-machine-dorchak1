@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 
-class RetrievalBin
-{
+class RetrievalBin {
 private:
     std::string contents;
 
@@ -10,6 +9,6 @@ public:
     RetrievalBin();
 
     bool isEmpty() const;
-    void receiveSnack(const std::string& snack);
+    bool release(const std::string& snack);
     std::string retrieveSnack();
 };

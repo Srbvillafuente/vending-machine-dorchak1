@@ -1,250 +1,74 @@
 #include <iostream>
-#include <string>
+#include "SnackDispenser.h"
 
 using namespace std;
 
+// =====================================
+// VendingMachine Class
+// =====================================
 
-// --------------------  COIL  --------------------
-
-class PackageSlot
-{
+class VendingMachine {
 private:
-    int capacity;
-    int coil;
-    int ID;
-    int counter;
-    string contents;
+    SnackDispenser snackDispenser;
+    int price;
 
 public:
-
-    PackageSlot()
-    {
-        capacity = 5;
-        coil = 0;
-        ID = 0;
-        counter = capacity;
-        contents = "";
+    VendingMachine() {
+        price = 0;
     }
 
-    void setCoil(int slotID, int coilNumber, string snack)
-    {
-        ID = slotID;
-        coil = coilNumber;
-        contents = snack;
-        counter = capacity;
-    }
+    void run() {
+        cout << "Welcome to the Vending Machine!" << endl;
+        cout << "Price: " << price << "Cents" << endl;
 
-    bool isEmpty()
-    {
-        return counter == 0;
-    }
+        // Start in refill mode.
+        snackDispenser.setState(false);
 
-    string dispense()
-    {
-        if (counter > 0)
-        {
-            counter--;
-            return contents;
+        // Fill all slots with Chips.
+        for (int row = 0; row < 2; row++) {
+            for (int slot = 0; slot < 5; slot++) {
+                snackDispenser.refillSlot(row, slot, "Chips");
+            }
         }
 
-        return "";
-    }
+        // Switch to selling mode
+        snackDispenser.setState(true);
 
-    void refill()
-    {
-        counter = capacity;
-    }
+        int choice = 0;
 
-    int getCounter() const
-    {
-        return counter;
-    }
+        while (choice != 2) {
+            cout << "\n===== VENDING MACHINE =====" << endl;
+            cout << "1. Select Snack" << endl;
+            cout << "2. Exit" << endl;
+            cout << "Enter choice (1-2): ";
 
-    string getContents()
-    {
-        return contents;
-    }
+            if (!(cin >> choice)) {
+                cout << "Invalid input. Please enter 1 or 2." << endl;
+                cin.clear();
+                cin.ignore(1000, '\n');
+                continue;
+            }
 
-    int getID() const
-    {
-        return ID;
+            if (choice == 1) {
+                snackDispenser.selectSnack();
+            }
+            else if (choice == 2) {
+                cout << "Thank you!" << endl;
+            }
+            else {
+                cout << "Invalid choice. Please enter 1 or 2." << endl;
+            }
+        }
     }
 };
 
+// =====================================
+// Main Function
+// =====================================
 
-// -------------------- SET OF COILS --------------------
-
-class SetOfCoils
-{
-private:
-
-    // 3 rows and 5 columns
-    PackageSlot slots[3][5];
-
-public:
-
-    PackageSlot& getSlot(int row, int column)
-    {
-        return slots[row][column];
-    }
-};
-
-
-// -------------------- SNACK STORAGE --------------------
-
-class SnackStorage
-{
-private:
-
-    SetOfCoils setOfSlots;
-
-public:
-
-    PackageSlot& getCoil(int row, int column)
-    {
-        return setOfSlots.getSlot(row, column);
-    }
-};
-
-
-// -------------------- RETRIEVAL BIN --------------------
-
-class RetrievalBin
-{
-private:
-
-    string contents;
-
-public:
-
-    RetrievalBin()
-    {
-        contents = "";
-    }
-
-    bool isEmpty()
-    {
-        return contents == "";
-    }
-
-    void receiveSnack(string snack)
-    {
-        contents = snack;
-    }
-
-    string retrieveSnack()
-    {
-        string snack = contents;
-        contents = "";
-
-        return snack;
-    }
-};
-
-
-// -------------------- SNACK DISPENSER --------------------
-
-class SnackDispenser
-{
-private:
-
-    SnackStorage snackStorage;
-    RetrievalBin retrievalBin;
-
-public:
-
-    void loadCoil(int row, int column, int ID,
-        int coil, string snack)
-    {
-        snackStorage.getCoil(row, column)
-            .setCoil(ID, coil, snack);
-    }
-
-
-    void dispenseSnack(int row, int column)
-    {
-        PackageSlot& coil =
-            snackStorage.getCoil(row, column);
-
-        if (coil.isEmpty())
-        {
-            cout << "Out of stock." << endl;
-        }
-        else
-        {
-            string snack = coil.dispense();
-
-            retrievalBin.receiveSnack(snack);
-
-            cout << snack << " has been dispensed" << endl;
-        }
-    }
-
-
-    void retrieveSnack()
-    {
-        if (retrievalBin.isEmpty())
-        {
-            cout << "Retrieval bin is empty." << endl;
-        }
-        else
-        {
-            cout << "Retrieved: "
-                << retrievalBin.retrieveSnack()
-                << endl;
-        }
-    }
-
-
-    void refillSlot(int row, int column)
-    {
-        snackStorage.getCoil(row, column).refill();
-
-        cout << "Slot refilled." << endl;
-    }
-
-
-    void checkCoil(int row, int column)
-    {
-        PackageSlot& coil =
-            snackStorage.getCoil(row, column);
-
-        cout << "Coil ID: "
-            << coil.getID() << endl;
-
-        cout << "Contents: "
-            << coil.getContents() << endl;
-
-        cout << "Packages remaining: "
-            << coil.getCounter() << endl;
-    }
-};
-
-
-// -------------------- MAIN --------------------
-
-int main()
-{
-    SnackDispenser machine;
-
-    // Load a coil
-    machine.loadCoil(0, 0, 1, 1, "Chips");
-
-    // Check the coil
-    machine.checkCoil(0, 0);
-
-    cout << endl;
-
-    // Dispense a snack
-    machine.dispenseSnack(0, 0);
-
-    // Customer retrieves the snack
-    machine.retrieveSnack();
-
-    cout << endl;
-
-    // Check slot again
-    machine.checkCoil(0, 0);
+int main() {
+    VendingMachine machine;
+    machine.run();
 
     return 0;
 }
