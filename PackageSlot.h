@@ -2,17 +2,16 @@
 #include <string>
 
 class PackageSlot {
-private:
     std::string snack;
-    const int capacity = 5;
+    static const int capacity = 5;
     int quantity = 0;
     int countDispensed = 0;
 
 public:
-    PackageSlot();
-
     std::string drop();
-    bool refill(const std::string& newSnack);
+    bool refill(const std::string& newSnack, int amount);
     bool isEmpty() const;
+    int getQuantity() const;
     int getDispensedCount() const;
+    std::string getSnackName() const;
 };

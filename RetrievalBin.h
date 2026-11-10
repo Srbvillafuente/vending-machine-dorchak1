@@ -4,11 +4,11 @@
 class RetrievalBin {
 private:
     std::string contents;
+    bool retrievalMode = false;
 
 public:
-    RetrievalBin();
-
     bool isEmpty() const;
+    bool isReadyForPickup() const;
     bool release(const std::string& snack);
     std::string retrieveSnack();
 };

@@ -1,18 +1,12 @@
-//
-// Created by Sebastian Baltazar on 10/13/26.
-//
-
-#ifndef UNTITLED_DOOR_H
-#define UNTITLED_DOOR_H
+#pragma once
 #include <string>
 
 class Door {
-    private:
-    std::string name;
+    bool open = false;
 
-    public:
-    std::string getName() const;
-    void setName(std::string name);
+public:
+    bool isOpen() const;
+    void openForRefill();
+    void closeAndLock();
+    std::string requestSlot() const;
 };
-
-#endif //UNTITLED_DOOR_H

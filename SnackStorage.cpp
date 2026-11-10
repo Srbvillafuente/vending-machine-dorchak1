@@ -4,6 +4,8 @@ SnackRow& SnackStorage::getSnackRow(int index) {
     return snackRows[index];
 }
 
-PackageSlot& SnackStorage::getPackageSlot(int row, int slot) {
+PackageSlot& SnackStorage::getPackageSlot(
+    int row, int slot) {
+
     return getSnackRow(row).getPackageSlot(slot);
 }

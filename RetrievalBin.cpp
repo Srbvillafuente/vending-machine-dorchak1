@@ -1,38 +1,30 @@
 #include "RetrievalBin.h"
-#include <iostream>
-
 using namespace std;
-
-RetrievalBin::RetrievalBin() {
-    contents = "";
-}
 
 bool RetrievalBin::isEmpty() const {
     return contents.empty();
 }
 
-bool RetrievalBin::release(const string& snack) {
-    if (!isEmpty()) {
-        cout << "Retrieval bin is already occupied." << endl;
-        return false;
-    }
+bool RetrievalBin::isReadyForPickup() const {
+    return retrievalMode && !isEmpty();
+}
 
-    if (snack.empty()) {
+bool RetrievalBin::release(const string& snack) {
+    if (!isEmpty() || snack.empty())
         return false;
-    }
 
     contents = snack;
+    retrievalMode = true;
     return true;
 }
 
 string RetrievalBin::retrieveSnack() {
-    if (isEmpty()) {
-        cout << "Retrieval bin is empty." << endl;
+    if (!isReadyForPickup())
         return "";
-    }
 
     string snack = contents;
-    contents = "";
+    contents.clear();
+    retrievalMode = false;
 
     return snack;
 }
