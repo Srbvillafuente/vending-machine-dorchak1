@@ -11,4 +11,5 @@ add_executable(untitled main.cpp
         PackageSlot.cpp
         RetrievalBin.cpp
         SnackStorage.cpp
-        slotRow.h)
+        slotRow.h
+        Door.cpp)
